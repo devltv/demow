@@ -1,0 +1,35 @@
+{
+    "mysql": {
+      "host": "files.000webhost.com",
+      "port": 21,
+      "user": "selurprojectweb",
+      "password": "0nePiece",
+      "database": "news",
+      "connectionLimit": 10,
+      "multipleStatements": true
+    },
+    "authentication":{
+      "saltRounds": 8
+    },
+    "momentDefault":{
+      "Duration": {
+        "Year": "Y",
+        "Quarters": "Q",
+        "Months": "M",
+        "Weeks": "w",
+        "Days": "d",
+        "Hours": "h",
+        "Minutes": "m",
+        "Seconds": "s",
+        "Miliseconds": "ms"
+      },
+      "NumberTime": 7
+    },
+    "addMinutes": 10080,
+    "pagination": {
+      "limit": 4,
+      "limitPaginationLinks":5,
+      "limitPostPage": 3
+    },
+    "filesize": 1048576
+}

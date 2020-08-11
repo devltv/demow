@@ -1,0 +1,56 @@
+<div class="modal fade" id="modalDetailPost" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <!-- Page Content -->
+        <div class="container">
+
+          <!-- Portfolio Item Heading -->
+          {{!-- <h1 class="my-4">Page Heading
+            <small>Secondary Text</small>
+          </h1> --}}
+
+          <!-- Portfolio Item Row -->
+          <div class="row">
+            <div class = 'col-sm-8 p-0'>
+                {{#if AvatarEmpty}}
+                <img class="img-fluid" src="http://placehold.it/750x500" alt="Responsive image">
+                {{else}}
+                <img class="img-fluid" src="{{Avatar}}" alt="Responsive image">
+                {{/if}}
+            </div>
+            
+
+            <div class="col-sm-4">
+              <h3 class="my-3">Description</h3>
+              <p>{{BriefCont}}</p>
+              <h3 class="my-3">Details</h3>
+              <ul>
+                <li>Tiêu đề: {{Title}}</li>
+                <li>Chuyên mục: {{Categories}}</li>
+                <li>Chi tiết chuyên mục: {{DetailCategories}}</li>
+                <li>Ngày gửi bài: {{DatePost}}</li>
+                <li>Ngày đăng bài: {{DatetimePost}}</li>
+                <li>Số lượt xem: {{Views}}</li>
+                <li>Trạng thái: {{IdStatus}}</li>
+              </ul>
+            </div>
+
+          </div>
+          <!-- /.row -->
+
+          <!-- Related Projects Row -->
+          <h3 class="my-4">Content</h3>
+
+          <div class="row">
+            {{{FullCont}}}
+          </div>
+          <!-- /.row -->
+
+        </div>
+        <!-- /.container -->
+      </div>
+    </div>
+  </div>
+</div>

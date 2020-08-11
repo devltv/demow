@@ -1,0 +1,250 @@
+<div class="container-fluid">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-6">
+                    <h4>Article</h4>
+                </div>
+                <div class="col-6 d-flex p-1">
+                    <div class="input-group input-group-sm m-1">
+                        <form action="/writer/ViewPost/" method="POST" id="frmSearch"></form>
+                        <input type="search" class="form-control" placeholder="Search..." name="Search" form="frmSearch" value="{{Search}}">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit" formaction="frmSearch" id="submit">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="btn-group dropdown">
+                        <button class="btn btn-tool dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-filter" aria-hidden="true"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="/writer/ViewPost/?id={{IdStatus}}&page=1&opt=1">Trong hôm nay</a>
+                            <a class="dropdown-item" href="/writer/ViewPost/?id={{IdStatus}}&page=1&opt=2">Trong tuần này</a>
+                            <a class="dropdown-item" href="/writer/ViewPost/?id={{IdStatus}}&page=1&opt=3">Trong tháng này</a>
+                            <a class="dropdown-item" href="/writer/ViewPost/?id={{IdStatus}}&page=1&opt=4">Trong năm này</a>
+                        </div>
+                    </div>
+                </div>
+            </div>          
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-8">
+                    <nav class="nav nav-pills flex-column flex-sm-row p-2">
+                        <a class="flex-sm-fill text-sm-center nav-link {{#if IsActive4}} active {{/if}}" href="/writer/ViewPost/?id=4&page=1">Chưa
+                            được
+                            duyệt <span class="badge badge-light"> {{NumberOfPost 4}}</span></a>
+                        <a class="flex-sm-fill text-sm-center nav-link  {{#if IsActive1}} active {{/if}}" href="/writer/ViewPost/?id=1&page=1">Đã
+                            được
+                            duyệt chờ xuất
+                            bản <span class="badge badge-light"> {{NumberOfPost 1}}</span></a></a>
+                        <a class="flex-sm-fill text-sm-center nav-link  {{#if IsActive3}} active {{/if}}" href="/writer/ViewPost/?id=3&page=1">Bị
+                            từ
+                            chối <span class="badge badge-light"> {{NumberOfPost 3}}</span></a></a>
+                        <a class="flex-sm-fill text-sm-center nav-link  {{#if IsActive2}} active {{/if}}" href="/writer/ViewPost/?id=2&page=1">Đã
+                            xuất
+                            bản <span class="badge badge-light"> {{NumberOfPost 2}}</span></a></a>
+                    </nav>
+                </div>
+                <div class="col-4 p-2 d-flex justify-content-end"></div>
+            </div>
+
+            {{#if this.empty}}
+            <div class="row justify-content-center">
+                <h1 class='text-primary'></h1>
+            </div>
+            {{else}}
+            <div class="row">
+                {{#each this.ListPosts}}
+                <div class="col-sm-6 mb-3">
+                    <div class="card promoting-card">
+                        <!-- Card content -->
+                        <div class="card-body d-flex flex-row">
+
+                            <!-- Avatar -->
+
+                            <img src="{{AvatarPost AvatarPost}}"
+                                class="rounded-circle mr-3" height="50px" width="50px" alt="avatar">
+
+                            <!-- Content -->
+                            <div class="row w-100">
+                                  <!-- Title -->
+                                <div class="col-6 text-left">
+                                    <h4 class="card-title font-weight-bold mb-2">{{NameOfWriter}}</h4>
+                                </div>
+                                <!-- Subtitle -->
+                                <div class="col-6 text-right">
+                                    <p class="card-text"><i class="far fa-clock pr-2"></i>{{format_datetime DatePost}}</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Card image -->
+                        <div class="view m-1 p-2">
+                            {{!-- <img class="card-img-top rounded-0"
+                            src="/public/conference/1.jpg" alt="Card image cap"> --}}
+                            <h4 class="card-title font-weight-bold mb-2">{{Title}}</h4>
+                            <a href="#!">
+                                <div class="mask rgba-white-slight"></div>
+                            </a>
+                        </div>
+
+                        <!-- Card content -->
+                        <div class="card-body">
+                            <div class="collapse-content">
+
+                                <!-- Text -->
+                                <p class="card-text collapse" id="collapseContent{{@index}}">{{Content_Summary}}</p>
+                                <!-- Button -->
+                                <a class="btn btn-primary red-text p-1 my-1 mr-0 mml-1 collapsed" data-toggle="collapse"
+                                    href="#collapseContent{{@index}}" aria-expanded="false"
+                                    aria-controls="collapseContent" id="{{@index}}">Read
+                                    More</a>
+                                <a class="btn btnDetail btn-outline-primary p-1 my-1 mr-0 mml-1 collapsed" data-value={{Id}}
+                                    id="btn{{@index}}" href="">Detail</a>
+                                    
+                                {{#Update this.IdStatus Id}}
+                                    <a class="btn btnUpdate btn-outline-primary p-1 my-1 mr-0 mml-1 " data-value={{this.Id}}
+                                    id="Update{{@index}}" href="/writer/Update/{{this.Id}}">Modify</a>
+                                {{/Update}}
+                                {{#FeedBack this.IdStatus Id}}
+                                 <a class="btn btnFeedBack btn-outline-primary p-1 my-1 mr-0 mml-1 " data-value={{this.Id}}
+                                    id="FB{{@index}}" href="/writer/FeedBack_Inbox/{{this.Id}}/1">Feeds Back</a>
+                                {{/FeedBack}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+            <div class="row justify-content-center">
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        <li class="page-item {{#unless can_go_prev}}disabled{{/unless}}">
+                            <a class="page-link" {{#if SearchNotEmpty}}href="/writer/ViewPost/?page=1&Search={{Search}}"{{else}}href="/writer/ViewPost/?id={{this.IdStatus}}&page=1&opt={{Opt}}"{{/if}} aria-label="Previous">
+                                <span aria-hidden="true">FIRST</span>
+                            </a>
+                        </li>
+                        <li class="page-item {{#unless can_go_prev}}disabled{{/unless}}">
+                            <a class="page-link" {{#if SearchNotEmpty}}href="/writer/ViewPost/?page={{prev_value}}&Search={{Search}}"{{else}}href="/writer/ViewPost/?id={{this.IdStatus}}&page={{prev_value}}&opt={{Opt}}"{{/if}} aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {{#each this.page_items}}
+                        {{#if isActive}}
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link">
+                                {{value}}
+                                <span class="sr-only">(current)</span>
+                            </span>
+                        </li>
+                        {{else}}
+                        <li class="page-item {{#if isDisabled}}disabled{{/if}}">
+                            <a class="page-link"{{#if ../SearchNotEmpty}}href="/writer/ViewPost/?page={{value}}&Search={{../Search}}"{{else}}href="/writer/ViewPost/?id={{this.IdStatus}}&page={{value}}&opt={{Opt}}"{{/if}}>{{value}}</a>
+                        </li>
+                        {{/if}}
+                        {{/each}}
+                        <li class="page-item {{#unless can_go_next}}disabled{{/unless}}">
+                            <a class="page-link" {{#if SearchNotEmpty}}href="/writer/ViewPost/?page={{next_value}}&Search={{Search}}"{{else}}href="/writer/ViewPost/?id={{this.IdStatus}}&page={{next_value}}&opt={{Opt}}"{{/if}} aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        <li class="page-item {{#unless can_go_next}}disabled{{/unless}}">
+                            <a class="page-link" {{#if SearchNotEmpty}}href="/writer/ViewPost/?page={{last}}&Search={{Search}}"{{else}}href="/writer/ViewPost/?id={{this.IdStatus}}&page={{last}}&opt={{Opt}}"{{/if}} aria-label="Next">
+                                <span aria-hidden="true">LAST</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            {{/if}}
+        </div>
+    </div>
+
+</div>
+
+
+<div id="DetailPage"></div>
+{{#section 'js'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+<script>
+    function ChangeRead() {
+        const btn = document.getElementsByClassName("btn");
+        for (let i = 0; i < btn.length; i++) {
+            const btnRead = document.getElementById(i);
+            if (btnRead !== null) {
+                btnRead.addEventListener("click", function () {
+                    if (this.getAttribute("aria-expanded") === "false") {
+                        this.innerHTML = "Read Less";
+                    }
+                    else {
+                        this.innerHTML = "Read More";
+                    }
+                });
+            }
+        }
+    }
+
+    function ShowDetail() {
+        const btn = document.getElementsByClassName("btnDetail");
+        for (let i = 0; i < btn.length; i++) {
+            const btnId = document.getElementById("btn" + i);
+            const IdPost = btnId.getAttribute('data-value');
+            if (btnId !== null) {
+                btnId.addEventListener("click", function () {
+                    event.preventDefault();
+                    const xhttp = new XMLHttpRequest();
+                    xhttp.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            const data = xhttp.responseText;
+                            const dataParsed = JSON.parse(data);
+                            const Title = dataParsed.Post[0].Title;
+                            const BriefCont = dataParsed.Post[0].Content_Summary;
+                            const FullCont = dataParsed.Post[0].Content_Full;
+                            const Views = dataParsed.Post[0].Views;
+                            const DatePost = moment(dataParsed.Post[0].DatePost).format('YYYY-MM-DD HH:mm:ss');
+                            const DatetimePost = dataParsed.Post[0].DatetimePost;
+                            const IdStatus = dataParsed.Status[0].Name;
+                            const Categories = dataParsed.Categories[0].CategorieName;
+                            const DetailCategories = dataParsed.Categories[0].SubCategories;
+                            let Avatar = dataParsed.Post[0].Avatar !== null ? dataParsed.Post[0].Avatar : false;
+                            let AvatarEmpty = Avatar === 'null';
+                            document.getElementById("DetailPage").innerHTML = Handlebars.templates.DetailPost({ Title, Views, DatePost, DatetimePost, IdStatus, Categories, DetailCategories, Avatar, BriefCont, FullCont, AvatarEmpty });
+                            $("#modalDetailPost").modal("show");
+                        }
+                    }
+                    xhttp.open("GET", "/writer/DetailPost/?id=" + IdPost, true);
+                    xhttp.send();
+                }, true);
+            }
+        }
+    }
+
+
+    function Search()
+    {
+        const formSearch = document.getElementById('frmSearch');
+        const btnSubmit = document.getElementById('submit');
+        btnSubmit.addEventListener('click', function () {
+            formSearch.submit();
+        }, true);
+    }
+
+    window.onload = function () {
+        ChangeRead();
+        ShowDetail();
+        Search();
+    }
+</script>
+{{/section}}
+{{#section 'css'}}
+<link rel="stylesheet" href="/public/css/styleOfWriter.css">
+{{/section}}
+
+
+
+
